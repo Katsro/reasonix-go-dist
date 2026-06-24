@@ -5,14 +5,12 @@
 set -e
 
 REPO="Katsro/reasonix-go-dist"
-BIN_NAME="reasonix"
 CMD_NAME="reasonixgo"
 TMP_DIR=$(mktemp -d)
 
 cleanup() { rm -rf "$TMP_DIR"; }
 trap cleanup EXIT
 
-# 检测架构和 OS
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -25,24 +23,17 @@ case "$OS" in
     *) echo "Unsupported OS: $OS"; exit 1 ;;
 esac
 
-# 下载二进制
-BIN_URL="https://github.com/$REPO/releases/latest/download/reasonix-${OS}-${ARCH}"
+BIN_URL="https://github.com/$REPO/releases/latest/download/reasonixgo-${OS}-${ARCH}"
 echo "Downloading $BIN_URL ..."
-curl -fsSL "$BIN_URL" -o "$TMP_DIR/$BIN_NAME"
-chmod +x "$TMP_DIR/$BIN_NAME"
+curl -fsSL "$BIN_URL" -o "$TMP_DIR/$CMD_NAME"
+chmod +x "$TMP_DIR/$CMD_NAME"
 
-# 安装
 INSTALL_DIR="${HOME}/.local/bin"
 mkdir -p "$INSTALL_DIR"
-mv "$TMP_DIR/$BIN_NAME" "$INSTALL_DIR/$BIN_NAME"
-
-# 创建全局快捷命令
-SYMLINK_PATH="$INSTALL_DIR/$CMD_NAME"
-ln -sf "$INSTALL_DIR/$BIN_NAME" "$SYMLINK_PATH"
+mv "$TMP_DIR/$CMD_NAME" "$INSTALL_DIR/$CMD_NAME"
 
 echo ""
-echo "✅ Installed: $INSTALL_DIR/$BIN_NAME"
-echo "✅ Command:   $CMD_NAME"
+echo "✅ Installed: $INSTALL_DIR/$CMD_NAME"
 echo ""
 echo "Make sure $INSTALL_DIR is in your PATH:"
 echo "  export PATH=\"$INSTALL_DIR:\$PATH\""
