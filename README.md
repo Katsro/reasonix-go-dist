@@ -16,6 +16,10 @@ curl -fsSL https://raw.githubusercontent.com/Katsro/reasonix-go-dist/main/instal
 
 从 [Releases](https://github.com/Katsro/reasonix-go-dist/releases) 下载对应平台的二进制，放到 `~/.local/bin/` 并创建 `reasonixgo` 软链接。
 
+## ⚠️ 兼容性说明
+
+当前仅在 **Termux (Android/arm64)** 上测试通过，其他平台暂未验证。
+
 ## 编译信息
 
 - Go 版本: 1.26.3
